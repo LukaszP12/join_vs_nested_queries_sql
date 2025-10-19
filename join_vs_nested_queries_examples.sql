@@ -101,3 +101,16 @@ from customers c
 join orders o
 on c.CustomerId=o.CustomerId
 where o.Amount > 200;
+
+-- 4.EXISTS vs IN 
+
+select name 
+from Customers
+where CustomerID in (select CustomerID from Orders);
+
+SELECT Name
+FROM Customers c
+WHERE EXISTS (
+    SELECT 1 FROM Orders o
+    WHERE o.CustomerID = c.CustomerID
+);
