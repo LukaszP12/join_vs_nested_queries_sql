@@ -114,3 +114,5 @@ WHERE EXISTS (
     SELECT 1 FROM Orders o
     WHERE o.CustomerID = c.CustomerID
 );
+
+-- 5.EXISTS vs JOIN 
