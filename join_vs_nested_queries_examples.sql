@@ -84,3 +84,20 @@ from Customers c
 left join orders o
 on c.CustomerID  = o.CustomerID
 where o.CustomerID is null;
+
+-- Goal 3: Check customers who spent more than 200
+SELECT c.Name
+FROM customers c
+WHERE EXISTS (
+    SELECT 1
+    FROM orders o
+    WHERE o.CustomerID = c.CustomerID
+      AND o.Amount > 200
+);
+
+-- Using JOIN
+select distinct c.name
+from customers c
+join orders o
+on c.CustomerId=o.CustomerId
+where o.Amount > 200;
