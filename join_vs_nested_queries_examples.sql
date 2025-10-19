@@ -116,3 +116,18 @@ WHERE EXISTS (
 );
 
 -- 5.EXISTS vs JOIN 
+
+-- using join
+select distinct c.Name
+from Customers c 
+join orders o
+on c.CustomerID = o.CustomerID;
+
+-- using exists
+select c.name
+from Customers c
+where exists (
+	select 1
+    from Orders o
+    where o.CustomerID=c.CustomerID
+);
