@@ -131,3 +131,17 @@ where exists (
     from Orders o
     where o.CustomerID=c.CustomerID
 );
+
+-- Example 1: Find customers who placed orders last month
+
+-- Let's say the current month is February 2024, so "last month" means January 2024:
+
+select c.name
+from customers c
+where exists (
+	select 1
+    from orders o
+    where o.CustomerID = c.CustomerID
+    and o.orderDate >= '2024-01-01'
+    and o.orderDate < '2024-02-01'
+);
