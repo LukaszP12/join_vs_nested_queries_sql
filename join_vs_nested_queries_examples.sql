@@ -1,0 +1,53 @@
+USE join_vs_nested_queries;
+
+INSERT INTO customers (CustomerID, Name, Country) VALUES
+(1, 'Alice', 'USA'),
+(2, 'Bob', 'UK'),
+(3, 'Charlie', 'USA');
+
+INSERT INTO orders (OrderID, CustomerID, Amount) VALUES
+(101, 1, 300),
+(102, 2, 150),
+(103, 1, 250);
+
+SELECT * FROM customers;
+SELECT * FROM orders;
+
+select c.Name, o.OrderId, o.amount
+from customers c
+join orders o
+on c.CustomerID=o.CustomerID;
+
+-- Example 2: Get customers who placed at least one order
+-- nested query 
+select c.Name
+from Customers c
+where c.CustomerID in (select o.CustomerID from Orders o);
+
+-- joined query 
+
+select distinct c.Name
+from Customers c
+join orders o on c.CustomerId = o.CustomerId;
+
+-- Example 3: Get customers with no orders
+select name
+from customers
+where CustomerId not in (select CustomerId from orders);
+
+-- we can query records on the right, even if 
+-- the foreign key does not appear at all for
+-- the corresponding record like o.CustomerId
+-- but only for left join 
+select c.name
+from Customers c
+left join Orders o
+on c.CustomerId=o.CustomerId
+where o.CustomerId is null;
+-- without the left join it will not work at all
+select c.name
+from Customers c
+join Orders o
+on c.CustomerId=o.CustomerId
+where o.CustomerId is null;
+
