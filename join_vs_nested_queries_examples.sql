@@ -55,8 +55,6 @@ where o.CustomerId is null;
 
 -- Goal 1: Find customers who have placed at least one order
 
--- SELECT 1 does not actually select data.
--- "Check if at least one row exists that matches the condition."
 select c.Name
 from Customers c
 where exists (
@@ -70,3 +68,19 @@ from Customers c
 join Orders o 
 on c.CustomerID=o.CustomerID;
 
+-- ✅ Goal 2: Find customers who have NO orders
+-- Using NOT EXISTS (Recommended)
+select c.name
+from customers c
+where not exists (
+	select 1
+    from Orders o
+	where o.CustomerId = c.CustomerId
+);
+
+-- Using LEFT JOIN
+select c.name
+from Customers c
+left join orders o
+on c.CustomerID  = o.CustomerID
+where o.CustomerID is null;
