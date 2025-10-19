@@ -51,3 +51,22 @@ join Orders o
 on c.CustomerId=o.CustomerId
 where o.CustomerId is null;
 
+-- EXISTS vs JOIN
+
+-- Goal 1: Find customers who have placed at least one order
+
+-- SELECT 1 does not actually select data.
+-- "Check if at least one row exists that matches the condition."
+select c.Name
+from Customers c
+where exists (
+	select 1
+    from Orders o
+    where o.CustomerID = c.CustomerID
+);
+
+select distinct c.Name
+from Customers c
+join Orders o 
+on c.CustomerID=o.CustomerID;
+
